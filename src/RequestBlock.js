@@ -76,7 +76,7 @@ class RequestBlock extends Component {
     }
 
     const cacheKey = this.generateCacheKey(props);
-    const cache = requestBlock.cache.checkCache(cacheKey);
+    const cache = requestBlock.cache.has(cacheKey) && requestBlock.cache.read(cacheKey);
 
     return cache ? parser(cache, props) : null;
   }
