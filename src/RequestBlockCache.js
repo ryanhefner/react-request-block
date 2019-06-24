@@ -2,7 +2,7 @@ const Flatted = require('flatted/cjs');
 
 export default class RequestBlockCache {
   constructor(cache, ssrMode) {
-    this.cache = new Map(cache);
+    this.rehydrateCache(cache);
     this.ssrMode = ssrMode;
   }
 
@@ -24,21 +24,27 @@ export default class RequestBlockCache {
     return this.cache.get(key);
   }
 
-  restore(cache) {
-    if (!cache) {
-      return this;
-    }
+  rehydrateCache(cache) {
+    if (cache) {
+      if (typeof cache === 'string') {
+        const data = Flatted.parse(cache);
 
-    if (typeof cache === 'string') {
-      const data = Flatted.parse(cache);
-
-      if (Symbol.iterator in Object(data)) {
-        this.cache = new Map(data);
+        if (Symbol.iterator in Object(data)) {
+          this.cache = new Map(data);
+          return;
+        }
+      }
+      else if (Array.isArray(cache)) {
+        this.cache = new Map(cache);
+        return;
       }
     }
-    else if (Array.isArray(cache)) {
-      this.cache = new Map(cache);
-    }
+
+    this.cache = new Map();
+  }
+
+  restore(cache) {
+    this.rehydrateCache(cache);
 
     return this;
   }
