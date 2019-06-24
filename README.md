@@ -1,6 +1,6 @@
 # react-request-block
 
-React component to compose requests within your components. Supports server-side rendering requests.
+React component to compose requests within your components, with support for server-side rendered requests.
 
 ## Install
 
