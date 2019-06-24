@@ -22,14 +22,14 @@
     "src",
     "types",
     "umd",
-    "RequestBlockCache.js",
-    "RequestBlockContext.js",
-    "RequestBlockProvider.js",
     "getDataFromTree.js",
     "hoc-utils.js",
     "index.js",
+    "RenderPromises.js",
     "RequestBlock.js",
-    "RequestBlockPromises.js",
+    "RequestBlockCache.js",
+    "RequestBlockContext.js",
+    "RequestBlockProvider.js",
     "withRequestBlock.js"
   ],
   "directories": {
