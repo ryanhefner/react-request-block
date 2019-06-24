@@ -16,4 +16,6 @@ Via [Yarn](https://yarn.fyi/react-request-block):
 yarn add react-request-block
 ```
 
+## License
+
 [MIT](LICENSE) © [Ryan Hefner](https://www.ryanhefner.com)
