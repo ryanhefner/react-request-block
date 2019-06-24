@@ -128,7 +128,7 @@ class RequestBlock extends Component {
           });
 
         if (!cache.ssrMode) {
-          cache.write(cachekey, request);
+          cache.write(cacheKey, request);
         }
 
         if (renderPromises) {
