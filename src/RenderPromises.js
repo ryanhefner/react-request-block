@@ -54,7 +54,7 @@ export default class RenderPromises {
       // every rendering, deduplicating them by query and variables is the
       // best we can do. If a different Query component happens to have the
       // same query document and variables, it will be immediately rendered
-      // by calling finish() in addQueryPromise, which could result in the
+      // by calling finish() in addPromise, which could result in the
       // rendering of an unwanted loading state, but that's not nearly as bad
       // as getting stuck in an infinite rendering loop because we kept calling
       // queryInstance.fetchData for the same Query component indefinitely.

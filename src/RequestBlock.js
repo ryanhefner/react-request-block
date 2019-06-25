@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import warning from 'warning';
 import withRequestBlock from './withRequestBlock';
 
+const fetch = require('node-fetch');
+
 class RequestBlock extends Component {
   constructor(props) {
     super(props);
@@ -121,7 +123,18 @@ class RequestBlock extends Component {
           return cacheEntry;
         }
 
-        const request = this.makeRequest(`${origin || ''}${url}`, options);
+        function makeRequest(url, options) {
+          return fetch(url, options)
+            .then(async response => {
+
+              const json = await response.json();
+              cache.write(cacheKey, json);
+
+              return json;
+            });
+        }
+
+        const request = makeRequest(`${origin || ''}${url}`, options);
 
         if (!cache.ssrMode) {
           cache.write(cacheKey, request);
@@ -138,17 +151,6 @@ class RequestBlock extends Component {
       .then(resolve)
       .catch(reject);
     });
-  }
-
-  async makeRequest(url, options) {
-    return fetch(url, options)
-      .then(async response => {
-
-        const json = await response.json();
-        cache.write(cacheKey, json);
-
-        return json;
-      });
   }
 
   requestData() {
@@ -201,7 +203,7 @@ class RequestBlock extends Component {
     const finish = () => children(this.getQueryResult());
 
     if (requestBlock && requestBlock.renderPromises) {
-      return requestBlock.renderPromises.addQueryPromise(this, finish);
+      return requestBlock.renderPromises.addPromise(this, finish);
     }
 
     return finish();
