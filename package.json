@@ -1,6 +1,6 @@
 {
   "name": "react-request-block",
-  "version": "0.1.0-beta.5",
+  "version": "0.1.0-beta.6",
   "description": "React component to compose requests within your components. Supports server-side rendering requests.",
   "repository": "ryanhefner/react-request-block",
   "keywords": [
