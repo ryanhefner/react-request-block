@@ -107,9 +107,10 @@ class RequestBlock extends Component {
         options,
       } = this.props;
 
-      this.validateRequestRequirements().then(() => {
+      this.validateRequestRequirements().then(async () => {
         const {
           cache,
+          origin,
           renderPromises,
         } = requestBlock;
 
@@ -120,26 +121,34 @@ class RequestBlock extends Component {
           return cacheEntry;
         }
 
-        const request = fetch(url, options)
-          .then(async response => {
-            cache.write(cacheKey, response);
-
-            return await response.json();
-          });
+        const request = this.makeRequest(`${origin || ''}${url}`, options);
 
         if (!cache.ssrMode) {
           cache.write(cacheKey, request);
         }
 
+        const response = await request;
+
         if (renderPromises) {
-          renderPromises.registerSSRObservable(this, request);
+          renderPromises.registerSSRObservable(this, response);
         }
 
-        return request;
+        return response;
       })
       .then(resolve)
       .catch(reject);
     });
+  }
+
+  async makeRequest(url, options) {
+    return fetch(url, options)
+      .then(async response => {
+
+        const json = await response.json();
+        cache.write(cacheKey, json);
+
+        return json;
+      });
   }
 
   requestData() {
