@@ -9,9 +9,9 @@ export default class RenderPromises {
   // Map from Query component instances to pending fetchData promises.
   renderPromises = new Map();
 
-  // Two-layered map from (query document, stringified variables) to QueryInfo
-  // objects. These QueryInfo objects are intended to survive through the whole
-  // getMarkupFromTree process, whereas specific Query instances do not survive
+  // Two-layered map from (query document, stringified variables) to RequestBlockInfo
+  // objects. These RequestBlockInfo objects are intended to survive through the whole
+  // getMarkupFromTree process, whereas specific RequestBlock instances do not survive
   // beyond a single call to renderToStaticMarkup.
   infoTrie = new Map();
 
@@ -20,7 +20,7 @@ export default class RenderPromises {
     this.lookupInfo(instance).observable = observable;
   }
 
-  // Get's the cached observable that matches the SSR Query instances query and variables.
+  // Get's the cached observable that matches the SSR RequestBlock instances query and variables.
   getSSRObservable(instance) {
     return this.lookupInfo(instance).observable;
   }
@@ -84,7 +84,6 @@ export default class RenderPromises {
       infoTrie.set(JSON.stringify(instanceObject), varMap);
     }
 
-    // @todo Can probably remove this check and simplify things. - Ryan
     const variablesString = JSON.stringify({
       url,
       options,
