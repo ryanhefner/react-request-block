@@ -30,7 +30,7 @@ the ability to provide a default `origin` to prepend onto the `RequestBlock` url
 #### Properties
 
 | Property         | Default                 | Description |
-| ================ | ======================= | =========== |
+| ---------------- | ----------------------- | ----------- |
 | `cache`          | `new RequestBlockCache` | `RequestBlockCache` instance for caching request made per provider. By default, a fresh cache instance is created if one is not supplied. |
 | `origin`         | `''`                    | Default origin to prepend to `RequestBlock` requests. Defaults to the current site’s protocol/host. |
 | `renderPromises` | `null`                  | This is used strictly for server-side rendering instances. In most cases you shouldn’t worry about setting this, unless you need to. In which case, it accepts a `RenderPromises` instance. |
@@ -45,7 +45,7 @@ with `redux`/`react-redux`.
 #### Properties
 
 | Property    | Default                                     | Description  |
-| =========== | =========================================== | ============ |
+| ----------- | ------------------------------------------- | ------------ |
 | `url`       | `null`                                      | URL to make request to. If `origin` specified on `RequestBlockProvider`, `url` will be appended to it. |
 | `options`   | `null`                                      | Options to include with `fetch` request made. All normal `fetch` options accepted. |
 | `parser`    | `(data, props) => data`                     | Method for manipulating the response payload before it is applied to the `data` value. Handy for stripping out unwanted stuff, or making it more useable for your page or component. |
@@ -61,7 +61,7 @@ Provides access to the current context of the `ReactRequestBlock`.
 #### Properties
 
 | Property         | Type                | Description |
-| ================ | =================== | =========== |
+| ---------------- | ------------------- | ----------- |
 | `cache`          | `RequestBlockCache` | The current `RequestBlockCache` instance being used by the provider. |
 | `origin`         | `string`            | Origin to prepend to urls being requested by `RequestBlock` instances. |
 | `renderPromises` | `RenderPromises`    | `RenderPromises` instance set for use during server-side rendering. |
