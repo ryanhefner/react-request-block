@@ -47,16 +47,16 @@ class RequestBlock extends Component {
       } = this.props;
 
       // Check for contentful context
-      warning(requestBlock, 'No requestBlock context passed to <Request />');
+      warning(requestBlock, 'No requestBlock context passed to <RequestBlock />');
 
       if (!requestBlock) {
-        return reject('No requestBlock context passed to <Request />');
+        return reject('No requestBlock context passed to <RequestBlock />');
       }
 
-      warning(url, 'url prop not set on <Request />');
+      warning(url, 'url prop not set on <RequestBlock />');
 
       if (!url) {
-        return reject('url prop not set on <Request />');
+        return reject('url prop not set on <RequestBlock />');
       }
 
       return resolve(true);
@@ -190,7 +190,7 @@ class RequestBlock extends Component {
     });
   }
 
-  getQueryResult() {
+  getResult() {
     return this.state;
   }
 
@@ -200,7 +200,7 @@ class RequestBlock extends Component {
       requestBlock,
     } = this.props;
 
-    const finish = () => children(this.getQueryResult());
+    const finish = () => children(this.getResult());
 
     if (requestBlock && requestBlock.renderPromises) {
       return requestBlock.renderPromises.addPromise(this, finish);
@@ -225,9 +225,9 @@ RequestBlock.defaultProps = {
   children: ({data, error, fetched, loading}) => null,
   skip: false,
   parser: (data, props) => data,
-  onError: () => {},
-  onLoad: () => {},
-  onRequest: () => {},
+  onError: ({ data, error, fetched, loading }) => {},
+  onLoad: ({ data, error, fetched, loading }) => {},
+  onRequest: ({ data, error, fetched, loading }) => {},
 };
 
 export default withRequestBlock(RequestBlock);
