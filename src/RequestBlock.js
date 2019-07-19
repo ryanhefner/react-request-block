@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import warning from 'warning';
+import merge from 'deepmerge';
 import withRequestBlock from './withRequestBlock';
 
 const fetch = require('node-fetch');
@@ -83,18 +84,33 @@ class RequestBlock extends Component {
     return cache ? parser(cache, props) : null;
   }
 
+  requestOptions(props) {
+    const {
+      ignoreContextOptions,
+      requestBlock,
+      options,
+    } = props;
+
+    if (requestBlock && !ignoreContextOptions) {
+      const { options: contextOptions } = requestBlock;
+
+      return merge(contextOptions || {}, options || {});
+    }
+
+    return options;
+  }
+
   generateCacheKey(props) {
     const {
       requestBlock,
       url,
-      options,
     } = props;
 
     if (!requestBlock) {
       return null;
     }
 
-    return JSON.stringify({url, options});
+    return JSON.stringify({url, options: this.requestOptions(props)});
   }
 
   async fetchData() {
@@ -106,7 +122,6 @@ class RequestBlock extends Component {
       const {
         requestBlock,
         url,
-        options,
       } = this.props;
 
       this.validateRequestRequirements().then(async () => {
@@ -122,6 +137,8 @@ class RequestBlock extends Component {
         if (cacheEntry) {
           return cacheEntry;
         }
+
+        const options = this.requestOptions(this.props);
 
         function makeRequest(url, options) {
           return fetch(url, options)
@@ -212,6 +229,7 @@ class RequestBlock extends Component {
 
 RequestBlock.propTypes = {
   children: PropTypes.func,
+  ignoreContextOptions: PropTypes.bool,
   url: PropTypes.string,
   options: PropTypes.object,
   parser: PropTypes.func,
@@ -223,6 +241,7 @@ RequestBlock.propTypes = {
 
 RequestBlock.defaultProps = {
   children: ({data, error, fetched, loading}) => null,
+  ignoreContextOptions: false,
   skip: false,
   parser: (data, props) => data,
   onError: ({ data, error, fetched, loading }) => {},
