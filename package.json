@@ -51,8 +51,8 @@
     "test": "jest --findRelatedTests src/RequestBlockProvider.js src/RequestBlock.js src/withRequestBlock.js"
   },
   "peerDependencies": {
-    "react": "^16.4.0-0",
-    "react-dom": "^16.4.0-0"
+    "react": ">=16.3",
+    "react-dom": ">=16.3"
   },
   "dependencies": {
     "@babel/runtime": "^7.5.5",
