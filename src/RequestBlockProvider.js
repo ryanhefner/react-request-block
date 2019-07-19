@@ -10,12 +10,14 @@ class RequestBlockProvider extends Component {
 
     const {
       cache,
+      options,
       origin,
       renderPromises,
     } = props;
 
     this.state = {
       cache: cache || (new RequestBlockCache()),
+      options,
       origin,
       renderPromises,
     };
@@ -36,6 +38,7 @@ RequestBlockProvider.propTypes = {
   children: PropTypes.any,
   cache: PropTypes.object,
   context: PropTypes.object,
+  options: PropTypes.object,
   origin: PropTypes.string,
   renderPromises: PropTypes.object,
 };
