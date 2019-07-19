@@ -32,6 +32,7 @@ the ability to provide a default `origin` to prepend onto the `RequestBlock` url
 | Property         | Default                 | Description |
 | ---------------- | ----------------------- | ----------- |
 | `cache`          | `new RequestBlockCache` | `RequestBlockCache` instance for caching request made per provider. By default, a fresh cache instance is created if one is not supplied. |
+| `options`        | `null`                  | Default options to be included with each request made by a `RequestBlock`. Can be ignored by adding `ignoreContextOptions` to `RequestBlock` instances. |
 | `origin`         | `''`                    | Default origin to prepend to `RequestBlock` requests. Defaults to the current site’s protocol/host. |
 | `renderPromises` | `null`                  | This is used strictly for server-side rendering instances. In most cases you shouldn’t worry about setting this, unless you need to. In which case, it accepts a `RenderPromises` instance. |
 
@@ -44,25 +45,27 @@ with `redux`/`react-redux`.
 
 #### Properties
 
-| Property    | Default                                     | Description  |
-| ----------- | ------------------------------------------- | ------------ |
-| `url`       | `null`                                      | URL to make request to. If `origin` specified on `RequestBlockProvider`, `url` will be appended to it. |
-| `options`   | `null`                                      | Options to include with `fetch` request made. All normal `fetch` options accepted. |
-| `parser`    | `(data, props) => data`                     | Method for manipulating the response payload before it is applied to the `data` value. Handy for stripping out unwanted stuff, or making it more useable for your page or component. |
-| `skip`      | `false`                                     | Whether or not the request should be skipped during server-side rendering. |
-| `onRequest` | `({ data, error, fetched, loading }) => {}` | Callback made when a request is initiated. |
-| `onLoad`    | `({ data, error, fetched, loading }) => {}` | Callback made when request has successfull completed. |
-| `onError`   | `({ data, error, fetched, loading }) => {}` | Callback made when a request encounters an error. |
+| Property               | Default                                     | Description  |
+| ---------------------- | ------------------------------------------- | ------------ |
+| `url`                  | `null`                                      | URL to make request to. If `origin` specified on `RequestBlockProvider`, `url` will be appended to it. |
+| `options`              | `null`                                      | Options to include with `fetch` request made. All normal `fetch` options accepted. |
+| `parser`               | `(data, props) => data`                     | Method for manipulating the response payload before it is applied to the `data` value. Handy for stripping out unwanted stuff, or making it more useable for your page or component. |
+| `skip`                 | `false`                                     | Whether or not the request should be skipped during server-side rendering. |
+| `ignoreContextOptions` | `false`                                     | Flag to ignore options set on the `RequestBlockProvider` for requests being made by `RequestBlock`. |
+| `onRequest`            | `({ data, error, fetched, loading }) => {}` | Callback made when a request is initiated. |
+| `onLoad`               | `({ data, error, fetched, loading }) => {}` | Callback made when request has successfull completed. |
+| `onError`              | `({ data, error, fetched, loading }) => {}` | Callback made when a request encounters an error. |
 
 ### `withRequestBlock` (HOC)
 
-Provides access to the current context of the `ReactRequestBlock`.
+Provides access to the current context of the `ReactRequestBlock`. Context passed to the wrapped component includes:
 
 #### Properties
 
 | Property         | Type                | Description |
 | ---------------- | ------------------- | ----------- |
 | `cache`          | `RequestBlockCache` | The current `RequestBlockCache` instance being used by the provider. |
+| `options`        | `object` | `null`   | Default request options that have been set on the `RequestBlockProvider`. |
 | `origin`         | `string`            | Origin to prepend to urls being requested by `RequestBlock` instances. |
 | `renderPromises` | `RenderPromises`    | `RenderPromises` instance set for use during server-side rendering. |
 
