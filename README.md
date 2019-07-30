@@ -196,8 +196,8 @@ export default Page;
 
 ## Using Next.js?
 
-If you like what you see above, you might like, [next-request-block](https://github.com/ryanhefner/next-request-block),
-which lets you easily add `react-request-block` to your Next.js app, making it easy
+If you like what you see above, you might like [next-request-block](https://github.com/ryanhefner/next-request-block),
+which lets you easily add `react-request-block` to your Next.js app. Making it easy
 to ensure that all your `RequestBlock` instances render awesomely server-side.
 
 ## License
