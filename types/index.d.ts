@@ -1,4 +1,4 @@
-// TypeScript Version: 3.4
+// TypeScript Version: 3.5
 
 import { Component, Context, ReactNode } from 'react';
 
@@ -36,6 +36,7 @@ export interface AnyContextProps extends ContextProps {
 export interface RequestBlockContext<A extends ContextProps = AnyContextProps> {
   cache?: RequestBlockCache;
   origin?: string;
+  options?: object;
   renderPromises?: boolean;
 }
 
@@ -52,7 +53,7 @@ export interface ProviderProps {
   renderPromises?: RenderPromises;
 }
 
-export class RequestBlockProvider extends Component<ProviderProps> {}
+export class RequestBlockProvider extends Component<ProviderProps, ProviderProps> {}
 
 /**
  * getDataFromTree
@@ -93,12 +94,13 @@ export interface RequestBlockProps {
   options?: any;
   parser?: ParserHandler;
   skip?: boolean;
+  ignoreContextOptions?: boolean;
   onError?: (state: RequestBlockState) => void;
   onLoad?: (state: RequestBlockState) => void;
   onRequest?: (state: RequestBlockState) => void;
 }
 
-export class RequestBlock extends Component<RequestBlockProps> {}
+export class RequestBlock extends Component<RequestBlockProps, RequestBlockState> {}
 
 /**
  * RenderPromises
