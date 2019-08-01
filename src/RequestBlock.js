@@ -151,7 +151,8 @@ class RequestBlock extends Component {
             });
         }
 
-        const request = makeRequest(`${origin || ''}${url}`, options);
+        const originRegex = /^((http)?(s)?(:)?)\/\//;
+        const request = makeRequest(`${originRegex.test(url) ? '' : (origin || '')}${url}`, options);
 
         if (!cache.ssrMode) {
           cache.write(cacheKey, request);
